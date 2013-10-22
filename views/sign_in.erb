@@ -1,0 +1,16 @@
+<% User.all.each { |each| %>
+
+  <%= each.name
+   %>
+    </br> 
+  <% } %>
+
+</br>
+
+<section id="sign_in">
+  <form action="/sign_in_verify" method="post">
+    <input type="text" name="name" placeholder="name"></input>
+  </br>
+    <input type="submit" value="Log in">
+  </form>
+</section>

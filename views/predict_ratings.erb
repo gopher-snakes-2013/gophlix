@@ -1,0 +1,19 @@
+Your predicted rating for <%= @selected_game_title %> is:
+</br> </br> </br>
+
+<%= @predicted_rating %> </br>
+
+</br> </br> </br>
+
+
+</br>
+</br>
+<form action="/user_home" method="get">
+  <input type="submit" value="Home">
+</form>
+
+</br>
+</br>
+<form action="/sign_out" method="post">
+  <input type="submit" value="Sign Out">
+</form>

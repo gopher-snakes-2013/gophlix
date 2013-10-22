@@ -1,0 +1,16 @@
+<% @matches.each do |user_info| %>
+  <%= "You are #{user_info[1]}% similar to #{user_info[0]}" %>
+  </br>
+<% end %>
+
+</br>
+</br>
+<form action="/user_home" method="get">
+  <input type="submit" value="Home">
+</form>
+
+</br>
+</br>
+<form action="/sign_out" method="post">
+  <input type="submit" value="Sign Out">
+</form>

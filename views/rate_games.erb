@@ -1,0 +1,23 @@
+<p>Rate from 1-10 (10 = best)</p>
+</br>
+
+  <% Game.all.each do |game| %>
+  </br>
+    <%= game.title %>
+    <form action="/rate_games" method="post">
+      <input type="number" name=<%= game.id %>  value="game_rating">
+    <% end %>
+    </br>
+      <input type = "submit" name = "rate_submit" value = "Rate!!">
+</form>
+
+</br>
+</br>
+<form action="/user_home" method="get">
+  <input type="submit" value="Home">
+</form>
+
+</br>
+<form action="/sign_out" method="post">
+  <input type="submit" value="Sign Out">
+</form>
