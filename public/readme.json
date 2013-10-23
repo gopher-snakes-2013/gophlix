@@ -1,8 +1,10 @@
 {
  "name": "John Uke",
+ "size": 100,
  "children": [
   {
    "name": "Jon Howell",
+    "size": 80,
     "children": [
       {"name": "Starcraft 2", "size": 80},
       {"name": "League of Legends", "size": 80},
