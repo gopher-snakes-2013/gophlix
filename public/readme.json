@@ -1,15 +1,15 @@
 {
  "name": "John Uke",
- "size": 100,
+ "size": 1,
  "children": [
   {
    "name": "Jon Howell",
-    "size": 80,
+    "size": 0.8,
     "children": [
-      {"name": "Starcraft 2", "size": 80},
-      {"name": "League of Legends", "size": 80},
-      {"name": "Guild Wars 2", "size": 100},
-      {"name": "World of Warcraft", "size": 60}
+      {"name": "Starcraft 2", "size": 0.8},
+      {"name": "League of Legends", "size": 0.8},
+      {"name": "Guild Wars 2", "size": 1},
+      {"name": "World of Warcraft", "size": 0.6}
     ]
   }
  ]
