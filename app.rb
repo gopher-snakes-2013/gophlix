@@ -27,9 +27,23 @@ post '/rate_movie' do
       MovieRating.create!(gsnake_id: session[:gsnake_id], movie_id: params.keys[index].to_i, rating: params.values[index].to_i)
     end
   end
-  redirect '/thanks'
+  p "-----------------------------------------"
+  p current_user#.run_matches
+  # p @matches = current_user.run_matches
+  # erb :thanks
 end
 
-get '/thanks' do
-  erb :thanks
+helpers do
+  def signed_in_user
+    current_user
+  end
+
+  def current_user
+    @current_user ||= Gsnake.find_by_id(session[:gsnake_id]) if session[:gsnake_id]
+  end
 end
+
+
+
+
+
