@@ -3,12 +3,11 @@
  "children": [
   {
    "name": "Jon Howell",
-    "match": 50,
     "children": [
-      {"name": "Starcraft 2", "size": 800},
-      {"name": "League of Legends", "size": 800},
-      {"name": "Guild Wars 2", "size": 1000},
-      {"name": "World of Warcraft", "size": 600}
+      {"name": "Starcraft 2", "size": 80},
+      {"name": "League of Legends", "size": 80},
+      {"name": "Guild Wars 2", "size": 100},
+      {"name": "World of Warcraft", "size": 60}
     ]
   }
  ]

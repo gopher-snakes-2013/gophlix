@@ -17,6 +17,7 @@
 
 </style>
 <body>
+<!-- May want to make this local to improve performance.  OnLoad? -->
 <script src="http://d3js.org/d3.v3.min.js"></script>
 <script>
 
@@ -25,8 +26,8 @@ var width = 960,
     root;
 
 var force = d3.layout.force()
-    .linkDistance(40)
-    .charge(-1000)
+    .linkDistance(50)
+    .charge(-100)
     .size([width, height])
     .on("tick", tick);
 
@@ -54,6 +55,7 @@ function update() {
 
   // Update the links…
   link = link.data(links, function(d) { return d.target.id; });
+  console.log(link)
 
   // Exit any old links.
   link.exit().remove();
@@ -133,3 +135,4 @@ function flatten(root) {
 
 
 </script>
+</body>
