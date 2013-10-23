@@ -10,24 +10,27 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20130917034328) do
+ActiveRecord::Schema.define(version: 20131023024153) do
 
-  create_table "game_ratings", id: false, force: true do |t|
-    t.integer  "game_id",    null: false
-    t.integer  "user_id",    null: false
-    t.integer  "rating",     null: false
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
 
-  create_table "games", force: true do |t|
-    t.string   "title"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  create_table "users", force: true do |t|
+  create_table "gsnakes", force: true do |t|
     t.string   "name"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "movie_ratings", id: false, force: true do |t|
+    t.integer  "movie_id",   null: false
+    t.integer  "gsnake_id",  null: false
+    t.integer  "rating"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "movies", force: true do |t|
+    t.string   "title"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

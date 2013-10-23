@@ -1,0 +1,10 @@
+Pick your name:
+<form action="/welcome" method="post">
+<select name='gsnake_id' onchange='this.form.submit()'>
+  <option selected></option>
+    <% Gsnake.all.each do |gsnake| %>
+      <option name=<%= gsnake.id %> value=<%= gsnake.id %>><%= gsnake.name %></option>
+    <% end %>
+  </select>
+<noscript><input type="submit" name="submit_name" value="click to submit!"></noscript>
+</form>

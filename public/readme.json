@@ -27,6 +27,10 @@
     "size": 0.6,
     "children": [
       {"name": "Halo 2", "size": 0.6}
+      {"name": "Starcraft 2", "size": 0.8},
+      {"name": "League of Legends", "size": 0.8},
+      {"name": "Guild Wars 2", "size": 1},
+      {"name": "World of Warcraft", "size": 0.6}
     ]
   }
  ]

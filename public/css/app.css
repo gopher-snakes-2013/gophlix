@@ -1,0 +1,11 @@
+#container {
+  width: 400px;
+  margin: 15px auto;
+  background-color: white;
+}
+
+
+h1 {
+  text-align: center;
+  color: gray;
+}
