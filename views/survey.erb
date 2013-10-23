@@ -1,23 +1,13 @@
 <!DOCTYPE html>
 <html>
-<head>GOPHLIX SURVEY</head>
 <body>
   <div id="container">
     <div id="greeting">
-      <p>HEY G_SNAKES!</p>
-      <p>we are GOPHLIX</p>
-      <p>and we would like you to take a short survey.</p>
-      <p>pleaze & thanxyew</p>
+      <p>Please rate the following movies. Enter N/A if you haven't watched it.</p>
     </div>
     <div id="survey">
       <p>
         <form action="/rate_movie" method="post">
-          <select name="names">
-            <option selected="selected">pick your name</option>
-          <% Gsnake.all.each do |gsnake| %>
-            <option name=<%= gsnake.id %> value=<%= gsnake.name %>><%= gsnake.name %></option>
-          <% end %>
-          </select><br/>
           <p>rate from 1-5 (5 = love)</p>
           <% Movie.all.each do |movie| %>
             <%= movie.title %>

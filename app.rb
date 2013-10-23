@@ -4,18 +4,28 @@ require_relative 'models/gsnake'
 require_relative 'models/movie'
 require_relative 'models/gsnakesmovies'
 
-# enable :sessions
+enable :sessions
 
 set :database, "postgres://localhost/gophlix"
 
 get '/' do
+  erb :welcome
+end
+
+post '/welcome' do
+  p session[:gsnake_id] = params[:gsnake_id]
+  redirect '/survey'
+end
+
+get '/survey' do
   erb :survey
 end
 
-post '/rate_games' do
+post '/rate_movie' do
+  p params
   params.keys.each_with_index do |item,index|
-    if item.to_i >=1 && params[item] != ""
-      MovieRating.create(user_id: session[:name], game_id: params.keys[index].to_i, rating: params.values[index])
+    if item.to_i >=0
+      MovieRating.create!(gsnake_id: session[:gsnake_id], movie_id: params.keys[index].to_i, rating: params.values[index])
     end
   end
   redirect '/thanks'
@@ -25,9 +35,6 @@ get '/thanks' do
   erb :thanks
 end
 
-# post '/rate_games_page' do
-#   erb :rate_games
-# end
 
 # post '/sign_in_verify' do
 #   login(params[:name])
