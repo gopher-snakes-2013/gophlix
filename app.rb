@@ -6,7 +6,7 @@ require_relative 'models/gsnakesmovies'
 
 # enable :sessions
 
-# set :database, "sqlite3:///db/weTree.db"
+set :database, "postgres://localhost/gophlix"
 
 get '/' do
   erb :survey

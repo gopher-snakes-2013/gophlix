@@ -9,22 +9,28 @@
       <p>and we would like you to take a short survey.</p>
       <p>pleaze & thanxyew</p>
     </div>
-    <div id="sign-in">
-      <form action="/sign_in" method="post">
-        <input type="text" name="name" placeholder="name">
-        <button>submit</button>
-      </form>
-    </div>
     <div id="survey">
-      <p>rate from 1-5 (5 = best)</p>
       <p>
-        <% Movie.all.each do |movie| %>
-          <%= movie.title %>
-          <form action="/rate_movie" method="post">
-            <input type="number" name=<%= movie.id %> value="movie_rating">
-        <% end %>
-            <button>submit</button>
-          </form>
+        <form action="/rate_movie" method="post">
+          <select name="names">
+            <option selected="selected">pick your name</option>
+          <% Gsnake.all.each do |gsnake| %>
+            <option name=<%= gsnake.id %> value=<%= gsnake.name %>><%= gsnake.name %></option>
+          <% end %>
+          </select><br/>
+          <p>rate from 1-5 (5 = love)</p>
+          <% Movie.all.each do |movie| %>
+            <%= movie.title %>
+            <input type="radio" name=<%= movie.id %> value="1">1
+            <input type="radio" name=<%= movie.id %> value="2">2
+            <input type="radio" name=<%= movie.id %> value="3">3
+            <input type="radio" name=<%= movie.id %> value="4">4
+            <input type="radio" name=<%= movie.id %> value="5">5
+            <input type="radio" name=<%= movie.id %> value="0">N/A
+            <br/><br/>
+          <% end %>
+          <button>submit</button>
+        </form>
       </p>
     </div>
   </div>
