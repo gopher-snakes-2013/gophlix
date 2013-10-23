@@ -103,7 +103,7 @@ function tick() {
 
 // Color leaf nodes orange, and packages white or blue.
 function color(d) {
-  if (d.children && d.size === 1) {return "black"}
+  if (d.children && d.size === 1) {return "orange"}
   else if (d._children){ return scale_parents(d.size)}
   else if (d.children){ return scale_parents(d.size)}
   else { return scale_children(d.size);}
