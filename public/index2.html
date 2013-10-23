@@ -15,11 +15,20 @@
   stroke-width: 1.5px;
 }
 
+/*body {
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  margin: auto;
+  position: relative;
+  width: 960px;
+}*/
+
 </style>
-<body>
+<body></body>
+
 <!-- May want to make this local to improve performance.  OnLoad? -->
-<script src="http://d3js.org/d3.v3.min.js"></script>
+<script src="d3.js"></script>
 <script>
+
 
 var width = 960,
     height = 500,
@@ -29,11 +38,25 @@ var force = d3.layout.force()
     .linkDistance(50)
     .charge(-100)
     .size([width, height])
+
     .on("tick", tick);
+
+var border = 5;
+var borderColor = "red";
 
 var svg = d3.select("body").append("svg")
     .attr("width", width)
-    .attr("height", height);
+    .attr("height", height)
+    .attr("border", border);
+
+var borderPath = svg.append("rect")
+    .attr("x", 0)
+    .attr("y", 0)
+    .attr("height", height)
+    .attr("width", width)
+    .style("stroke", borderColor)
+    .style("fill", "none")
+    .style("stroke-width", border);
 
 var link = svg.selectAll(".link"),
     node = svg.selectAll(".node");
@@ -153,4 +176,4 @@ scale_children = d3.scale.linear()
 
 
 </script>
-</body>
+<!-- </body> -->
