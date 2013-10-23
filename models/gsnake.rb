@@ -4,24 +4,24 @@ class Gsnake < ActiveRecord::Base
 end
 
 def run_matches
-  return Gsnake.all.inject([]) {|matches, peer| matches << [peer.name, compare_match(peer)]}
+  return Gsnake.all.inject([]) {|matches, peer| matches << [peer.name, get_percent_similar(peer)]}
 end
 
 
-def compare_match(peer)
-  rating_total = 0
-  sum_weight = 0
+def get_percent_similar(peer)
+  cumulative_similarity_rating = 0
+  cumulative_max_of_ratings = 0
 
   self.movies.each do |movie|
     if peer.movies.exists?(movie)
       self_rating = self.movie_ratings.where(movie_id: movie.id).take.rating
       peer_rating = peer.movie_ratings.where(movie_id: movie.id).take.rating
 
-      key_difference = 10 - (peerrating - selfrating).abs
-      rating_total += key_difference
-      sum_weight += 10
+      similarity_rating = 10 - (peer_rating - self_rating).abs
+      cumulative_similarity_rating += similarity_rating
+      cumulative_max_of_ratings += 10
     end
   end
-  match = rating_total.to_f / sum_weight.to_f
-  match.round(2)
+  percent_similar = cumulative_similarity_rating.to_f / cumulative_max_of_ratings.to_f
+  percent_similar.round(2)
 end
