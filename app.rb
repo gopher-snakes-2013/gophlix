@@ -1,34 +1,32 @@
 require "sinatra"
 require "sinatra/activerecord"
-require_relative 'models/user'
-require_relative 'models/game'
-require_relative 'models/usersgames'
+require_relative 'models/gsnake'
+require_relative 'models/movie'
+require_relative 'models/gsnakesmovies'
 
-enable :sessions
+# enable :sessions
 
-set :database, "sqlite3:///db/weTree.db"
+# set :database, "sqlite3:///db/weTree.db"
 
 get '/' do
-  p User.find(1).run_matches
-  "hey"
+  erb :survey
 end
 
-# class Parser
+post '/rate_games' do
+  params.keys.each_with_index do |item,index|
+    if item.to_i >=1 && params[item] != ""
+      MovieRating.create(user_id: session[:name], game_id: params.keys[index].to_i, rating: params.values[index])
+    end
+  end
+  redirect '/thanks'
+end
 
-#   def normalize_rating
+get '/thanks' do
+  erb :thanks
+end
 
-
-#   13.times do |n|
-#     rating_before = GameRating.where(game_id: 1, user_id: n)[0]
-
-#     unless rating_before == nil
-#       rating = GameRating.where(game_id: 1, user_id: n)[0][:rating]
-#     else
-#       rating = 0
-#     end
-#   end
-
-#   end
+# post '/rate_games_page' do
+#   erb :rate_games
 # end
 
 # post '/sign_in_verify' do
@@ -50,35 +48,6 @@ end
 #   redirect '/'
 # end
 
-# post '/rate_games' do
-#   params.keys.each_with_index do |item,index|
-#     if item.to_i >=1 && params[item] != ""
-#       GameRating.create(user_id: session[:name], game_id: params.keys[index].to_i, rating: params.values[index])
-#     end
-#   end
-#   redirect '/rate_games'
-# end
-
-# post '/rate_games_page' do
-#   erb :rate_games
-# end
-
-# post '/compare_users' do
-#   @matches = current_user.run_matches
-#   # @users = User.all
-#   erb :compare_users
-# end
-
-# post '/predict_ratings' do
-#   @selected_game_title = params[:game_dropdown]
-#   @selected_game = Game.find_by title: @selected_game_title
-#   @correlation_hash = @selected_game.run_correlations
-
-
-#   @user_similarity_hash = current_user.run_matches_prediction(@correlation_hash)
-#   @predicted_rating = current_user.cross_tabulate_prediction(@user_similarity_hash, @selected_game)
-#   erb :predict_ratings
-# end
 
 # helpers do
 #   def login(name)
@@ -97,4 +66,3 @@ end
 #     @current_user ||= User.find_by_id(session[:name]) if session[:name]
 #   end
 # end
-
