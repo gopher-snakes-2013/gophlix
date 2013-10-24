@@ -1,51 +1,48 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Gophlix</title>
+    <link rel="stylesheet" type="text/css" href="css/app.css">
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+  </head>
 
-Pick your name:
-<style>
+  <body>
+    <div id="container">
+      <h1>Gophlix</h1>
+      <div id="name-picker">
+        Pick your name:
+        <form action="/welcome" method="POST">
+          <select name='gsnake_id'>
+            <option selected></option>
+            <% Gsnake.all.each do |gsnake| %>
+              <option name=<%= gsnake.id %> value=<%= gsnake.id %>><%= gsnake.name %></option>
+            <% end %>
+          </select>
+          <button>submit</button>
+        </form>
+      </div>
+    </div>
+  </body>
 
-body {
-  text-align: center;
-}
-.node {
-  cursor: pointer;
-  stroke: #3182bd;
-  stroke-width: 1.5px;
-}
+  <script>
+   $(document).ready(function(){
+     $("form").on("submit", function(e){
+       e.preventDefault()
 
-.link {
-  fill: none;
-  stroke: #9ecae1;
-  stroke-width: 1.5px;
-}
-</style>
-<form action="/welcome" method="POST">
-<select name='gsnake_id'>
-  <option selected></option>
-    <% Gsnake.all.each do |gsnake| %>
-      <option name=<%= gsnake.id %> value=<%= gsnake.id %>><%= gsnake.name %></option>
-    <% end %>
-  </select>
-<button>submit</button>
-
-<script>
- $(document).ready(function(){
-   $("form").on("submit", function(e){
-     e.preventDefault()
-
-     $.ajax({
-       type: "POST",
-       url: "/welcome",
-       data: $(this).serialize()
-     }).done(function(json_data){
-       persons_data = json_data
-       update()
-     }).fail(function(){
-       console.log("womp")
+       $.ajax({
+         type: "POST",
+         url: "/welcome",
+         data: $(this).serialize()
+       }).done(function(json_data){
+         persons_data = json_data
+         update()
+       }).fail(function(){
+         console.log("womp")
+       })
      })
    })
- })
-</script>
+  </script>
+  <script src="javascripts/d3.js"></script>
+  <script src="javascripts/map.js"></script>
 
-<script src="d3.js"></script>
-<script src="map.js"></script>
-
-</form>
+</html>
