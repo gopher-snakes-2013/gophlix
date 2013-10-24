@@ -1,35 +1,10 @@
-<!DOCTYPE html>
-<meta charset="utf-8">
-<title>Force-Directed Graph</title>
-<style>
-
-.node {
-  cursor: pointer;
-  stroke: #3182bd;
-  stroke-width: 1.5px;
-}
-
-.link {
-  fill: none;
-  stroke: #9ecae1;
-  stroke-width: 1.5px;
-}
-
-</style>
-<body></body>
-
-<!-- May want to make this local to improve performance.  OnLoad? -->
-<script src="d3.js"></script>
-<script>
-
-
 var width = 960,
     height = 500,
     root;
 
 var force = d3.layout.force()
     .linkDistance(50)
-    .charge(-100)
+    .charge(-200)
     .size([width, height])
 
     .on("tick", tick);
@@ -54,14 +29,12 @@ var borderPath = svg.append("rect")
 var link = svg.selectAll(".link"),
     node = svg.selectAll(".node");
 
-d3.json("readme.json", function(json) {
-  root = json;
-  update();
-});
+// root = persons_data;
+// update();
 
 //called on json reading and on node click
 function update() {
-  var nodes = flatten(root),
+  var nodes = flatten(persons_data),
       links = d3.layout.tree().links(nodes);
 
   // Restart the force layout.
@@ -95,7 +68,7 @@ function update() {
       .attr("class", "node")
       .attr("cx", function(d) { return d.x; })
       .attr("cy", function(d) { return d.y; })
-      .attr("r", function(d) { return ( d.size * d.size * 10) })
+      .attr("r", function(d) { return ( d.match * d.match * 10) })
       //circle radius =  "size" or "match" attr of each object
       .style("fill", color)
       .on("click", click)
@@ -117,12 +90,24 @@ function tick() {
       .attr("cy", function(d) { return d.y; });
 }
 
+
+//sets colors.  higher match % greater saturation
+
 // Color leaf nodes orange, and packages white or blue.
 function color(d) {
-  if (d.children && d.size === 1) {return "orange"}
-  else if (d._children){ return scale_parents(d.size)}
-  else if (d.children){ return scale_parents(d.size)}
-  else { return scale_children(d.size);}
+
+  scale_parents = d3.scale.linear()
+         .domain([0, .7, 1])
+         .range(["white", "yellow", "green"]);
+
+  scale_children = d3.scale.linear()
+         .domain([0, .7, 1])
+         .range(["white", "gray", "blue"]);
+
+  if (d.children && d.match === 1) {return "orange"}
+  else if (d._children){ return scale_parents(d.match)}
+  else if (d.children){ return scale_parents(d.match)}
+  else { return scale_children(d.match);}
 }
 
 
@@ -141,7 +126,7 @@ function click(d) {
 }
 
 // Returns a list of all nodes under the root.
-function flatten(root) {
+function flatten(persons_data) {
   var nodes = [], i = 0;
 
   function recurse(node) {
@@ -150,18 +135,6 @@ function flatten(root) {
     nodes.push(node);
   }
 
-  recurse(root);
+  recurse(persons_data);
   return nodes;
 }
-
-
-//sets colors.  higher match % greater saturation
-scale_parents = d3.scale.linear()
-       .domain([0, .7, 1])
-       .range(["white", "yellow", "green"]);
-
-scale_children = d3.scale.linear()
-       .domain([0, .7, 1])
-       .range(["white", "gray", "blue"]);
-
-</script>

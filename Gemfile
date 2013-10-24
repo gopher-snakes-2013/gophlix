@@ -5,6 +5,7 @@ gem 'sinatra'
 gem 'activerecord'
 gem 'sinatra-activerecord'
 gem 'pg'
+gem 'json'
 
 group :development, :test do
   gem 'shotgun'
