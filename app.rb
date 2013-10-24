@@ -22,9 +22,12 @@ get '/survey' do
 end
 
 post '/rate_movie' do
-  params.keys.each_with_index do |item,index|
-    if item.to_i >=0
-      MovieRating.create!(gsnake_id: session[:gsnake_id], movie_id: params.keys[index].to_i, rating: params.values[index].to_i)
+  this_movie_rating = MovieRating.find_by(gsnake_id: session[:gsnake_id])
+  Movie.all.each_with_index do |movie,index|
+    if this_movie_rating
+      MovieRating.update(this_movie_rating.id, gsnake_id: session[:gsnake_id], movie_id: params.keys[index].to_i, rating: params.values[index])
+    else
+      MovieRating.create(gsnake_id: session[:gsnake_id], movie_id: params.keys[index].to_i, rating: params.values[index])
     end
   end
   redirect '/thanks'
