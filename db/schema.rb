@@ -21,9 +21,9 @@ ActiveRecord::Schema.define(version: 20131023024153) do
     t.datetime "updated_at"
   end
 
-  create_table "movie_ratings", id: false, force: true do |t|
-    t.integer  "movie_id",   null: false
-    t.integer  "gsnake_id",  null: false
+  create_table "movie_ratings", force: true do |t|
+    t.integer  "gsnake_id"
+    t.integer  "movie_id"
     t.integer  "rating"
     t.datetime "created_at"
     t.datetime "updated_at"
