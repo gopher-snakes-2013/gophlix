@@ -1,5 +1,6 @@
+
 var width = 960,
-    height = 800
+    height = 600;
 
 var force = d3.layout.force()
     .linkDistance(50)
@@ -7,10 +8,10 @@ var force = d3.layout.force()
     .size([width, height])
     .on("tick", tick);
 
-var border = 5;
-var borderColor = "black";
+var border = 3;
+var borderColor = "gray";
 
-var svg = d3.select("body").append("svg")
+var svg = d3.select("#map").append("svg")
     .attr("width", width)
     .attr("height", height)
     .attr("border", border);
@@ -27,7 +28,6 @@ var borderPath = svg.append("rect")
 var link = svg.selectAll(".link"),
     node = svg.selectAll(".node");
 
-// called on json reading and on node click
 function update() {
   var nodes = flatten(persons_data),
       links = d3.layout.tree().links(nodes);
@@ -133,3 +133,4 @@ function flatten(persons_data) {
   recurse(persons_data);
   return nodes;
 }
+
