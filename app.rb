@@ -23,8 +23,10 @@ helpers do
   end
 end
 
+## D3 Map Shenanigans:
+
 get '/' do
-  erb :welcome
+  erb :gophlix
 end
 
 post '/welcome' do
@@ -36,11 +38,15 @@ post '/welcome' do
   return data.to_json
 end
 
+## Survey Shnaz:
+
 get '/survey' do
   erb :survey
 end
 
 post '/rate_movie' do
+  session[:gsnake_id] = params[:gsnake_id]
+
   this_movie_rating = MovieRating.find_by(gsnake_id: session[:gsnake_id])
   Movie.all.each_with_index do |movie,index|
     if this_movie_rating
@@ -55,3 +61,4 @@ end
 get '/thanks' do
   erb :thanks
 end
+

@@ -1,85 +1,99 @@
-  <head>
-    <link rel="stylesheet" href="css/jquery-ui-1.10.3.custom.css" />
-    <script src="javascripts/jquery-ui-1.10.3.custom.js"></script>
 
-    <style>
-     .ui-widget-content {
-      background: #e00000; /* Old browsers */
-      background: -moz-linear-gradient(left, #e00000 0%, #ffffff 50%, #15db00 100%); /* FF3.6+ */
-      background: -webkit-gradient(linear, left top, right top, color-stop(0%,#e00000), color-stop(50%,#ffffff), color-stop(100%,#15db00)); /* Chrome,Safari4+ */
-      background: -webkit-linear-gradient(left, #e00000 0%,#ffffff 50%,#15db00 100%); /* Chrome10+,Safari5.1+ */
-      }
+<head>
+  <link rel="stylesheet" href="css/jquery-ui-1.10.3.custom.css" />
+  <script src="javascripts/jquery-ui-1.10.3.custom.js"></script>
+
+  <style>
+  .ui-widget-content {
+    background: #e00000; /* Old browsers */
+    background: -moz-linear-gradient(left, #e00000 0%, #ffffff 50%, #15db00 100%); /* FF3.6+ */
+    background: -webkit-gradient(linear, left top, right top, color-stop(0%,#e00000), color-stop(50%,#ffffff), color-stop(100%,#15db00)); /* Chrome,Safari4+ */
+    background: -webkit-linear-gradient(left, #e00000 0%,#ffffff 50%,#15db00 100%); /* Chrome10+,Safari5.1+ */
+  }
   </style>
 
 </head>
 
-<div id="container">
-    <div id="greeting">
-      <p>Please rate the following movies you have seen.</p>
+<div id="greeting">
+  <p>Please rate the following movies you have seen.</p>
+</div>
+</br>
+<div id="survey">
+  <p>
+    <form action="/rate_movie" method="post">
+
+     <div id="name-picker">
+      Pick your name:
+      <select name='gsnake_id'>
+        <option selected></option>
+        <% Gsnake.all.each do |gsnake| %>
+        <option name=<%= gsnake.id %> value=<%= gsnake.id %>><%= gsnake.name %></option>
+        <% end %>
+      </select>
     </div>
-    <div id="survey">
-      <p>
-        <form action="/rate_movie" method="post">
-          <% Movie.all.each do |movie| %>
-            <span id="<%=movie.title%>">
-              <label> <%= movie.title %></label>
+  </br></br>
 
-              <div class="slider" style="width:200px;display: inline-block;"></div>
+    <% Movie.all.each do |movie| %>
+    <span id="<%=movie.title%>">
+      <label> <%= movie.title %></label>
 
-              <div class="opinion" style="border: 0; font-weight: bold; display: inline-block; float:right;"></div>
+      <div class="slider" style="width:200px;display: inline-block;"></div>
 
-              <input type="text" name=<%= movie.id %> class="rating" style="border: 0; display: inline-block; font-weight: bold; font-size:12px; padding-left: 165px;"/>
-            </span>
-            <br/><br/>
+      <div class="opinion" style="border: 0; font-weight: bold; display: inline-block; float:right;"></div>
 
-          <% end %>
-          <button>submit</button>
-        </form>
-      </p>
-    </div>
-  </div>
+      <input type="text" name=<%= movie.id %> class="rating" style="border: 0; display: inline-block; font-weight: bold; font-size:12px; padding-left: 165px;"/>
+    </span>
+    <br/><br/>
 
-  <script>
-    $(".slider").slider({
-      orientation: "horizontal",
-      min: 1,
-      max: 100,
-      slide: function( event, ui ) {
-        slider_value = ui.value;
-        var opinion, opinion_color, rating;
-        if (slider_value < 35)
-        {
-          opinion = "HATE"
-          opinion_color = "#E00000"
-        }
-        else if (slider_value >= 35 && slider_value < 40)
-        {
-          opinion = "Dislike"
-          opinion_color = "#DD4B4B"
-        }
-        else if (slider_value >= 40 && slider_value < 60)
-        {
-          opinion = "\"Meh\""
-          opinion_color = "#A3A3A3"
-        }
-        else if (slider_value >= 60 && slider_value < 75)
-        {
-          opinion = "Like"
-          opinion_color = "#6CD660"
-        }
-        else if (slider_value >= 75 && slider_value < 90)
-        {
-          opinion = "Enjoy"
-          opinion_color = "#46D836"
-        }
-        else
-        {
-          opinion = "LOVE"
-          opinion_color = "#15DB00"
-        };
-        $(this).parent().children('.opinion').html(opinion).css("color",opinion_color);
-        rating = slider_value / 10.0;
-        $(this).parent().children(".rating").val(rating);
-      },
-    });
-  </script>
+    <% end %>
+    <button>submit</button>
+  </form>
+</p>
+</div>
+
+
+<script>
+$(".slider").slider({
+  orientation: "horizontal",
+  min: 1,
+  max: 100,
+  slide: function( event, ui ) {
+    slider_value = ui.value;
+    var opinion, opinion_color, rating;
+    if (slider_value < 35)
+    {
+      opinion = "HATE"
+      opinion_color = "#E00000"
+    }
+    else if (slider_value >= 35 && slider_value < 40)
+    {
+      opinion = "Dislike"
+      opinion_color = "#DD4B4B"
+    }
+    else if (slider_value >= 40 && slider_value < 60)
+    {
+      opinion = "\"Meh\""
+      opinion_color = "#A3A3A3"
+    }
+    else if (slider_value >= 60 && slider_value < 75)
+    {
+      opinion = "Like"
+      opinion_color = "#6CD660"
+    }
+    else if (slider_value >= 75 && slider_value < 90)
+    {
+      opinion = "Enjoy"
+      opinion_color = "#46D836"
+    }
+    else
+    {
+      opinion = "LOVE"
+      opinion_color = "#15DB00"
+    };
+    $(this).parent().children('.opinion').html(opinion).css("color",opinion_color);
+    rating = slider_value / 10.0;
+    $(this).parent().children(".rating").val(rating);
+  },
+});
+</script>
+
