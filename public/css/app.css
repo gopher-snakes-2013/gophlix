@@ -4,7 +4,7 @@ body {
 }
 
 #container {
-  width: 400px;
+  width: 600px;
   margin: 15px auto;
   background-color: white;
 }
@@ -40,3 +40,5 @@ margin-left: 4.5em;
   stroke: #9ecae1;
   stroke-width: 1.5px;
 }
+
+

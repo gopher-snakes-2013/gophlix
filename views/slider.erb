@@ -1,0 +1,65 @@
+
+<head>
+
+
+
+
+<body>
+
+
+
+
+
+  <div id="slider" style="width:200px;display: inline-block;"></div>
+
+  <input type="text" id="amount" style="border: 0; font-weight: bold;" />
+
+  <div id="rating"></div>
+
+  <script>
+    $("#slider").slider({
+      orientation: "horizontal",
+      min: 1,
+      max: 100,
+
+      slide: function( event, ui ) {
+        slider_value = ui.value;
+        var reaction, reaction_color, rating;
+        if (slider_value < 35)
+        {
+          reaction = "HATE"
+          reaction_color = "#E00000"
+        }
+        else if (slider_value >= 35 && slider_value < 40)
+        {
+          reaction = "Dislike"
+          reaction_color = "#DD4B4B"
+        }
+        else if (slider_value >= 40 && slider_value < 60)
+        {
+          reaction = "\"Meh\""
+          reaction_color = "#A3A3A3"
+        }
+        else if (slider_value >= 60 && slider_value < 75)
+        {
+          reaction = "Like"
+          reaction_color = "#6CD660"
+        }
+        else if (slider_value >= 75 && slider_value < 90)
+        {
+          reaction = "Enjoy"
+          reaction_color = "#46D836"
+        }
+        else
+        {
+          reaction = "LOVE"
+          reaction_color = "#15DB00"
+        };
+        $( "#amount" ).val(reaction).css("color",reaction_color);
+        rating = slider_value / 10.0;
+        $("#rating").html(rating);
+      },
+    });
+  </script>
+
+</body>

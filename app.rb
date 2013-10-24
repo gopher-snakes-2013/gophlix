@@ -9,6 +9,10 @@ enable :sessions
 
 set :database, "postgres://localhost/gophlix"
 
+get '/slider' do
+  erb :slider
+end
+
 helpers do
   def signed_in_user
     current_user
