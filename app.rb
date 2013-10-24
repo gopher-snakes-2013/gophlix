@@ -34,6 +34,10 @@ post '/welcome' do
 
   data = current_user.run_matches
 
+  File.open("public/test.json","w") do |f|
+    f.write(data.to_json)
+  end
+
   content_type :json
   return data.to_json
 end

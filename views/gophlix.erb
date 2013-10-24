@@ -35,7 +35,7 @@ $(document).ready(function(){
     }).done(function(json_data){
       $("#map").show();
       persons_data = json_data;
-      update();
+      startMap();
     }).fail(function(){
       console.log("womp");
     })
