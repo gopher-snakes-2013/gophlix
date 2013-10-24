@@ -1,0 +1,23 @@
+  <div id="container">
+    <div id="greeting">
+      <p>Please rate the following movies. Enter N/A if you haven't watched it.</p>
+    </div>
+    <div id="survey">
+      <p>
+        <form action="/rate_movie" method="post">
+          <p>rate from 1-5 (5 = love)</p>
+          <% Movie.all.each do |movie| %>
+           <label> <%= movie.title %></label>
+            <input type="radio" name=<%= movie.id %> value="1">1&nbsp;&nbsp;
+            <input type="radio" name=<%= movie.id %> value="2">2&nbsp;&nbsp;
+            <input type="radio" name=<%= movie.id %> value="3">3&nbsp;&nbsp;
+            <input type="radio" name=<%= movie.id %> value="4">4&nbsp;&nbsp;
+            <input type="radio" name=<%= movie.id %> value="5">5&nbsp;&nbsp;
+            <input type="radio" name=<%= movie.id %> value="0">N/A
+            <br/><br/>
+          <% end %>
+          <button>submit</button>
+        </form>
+      </p>
+    </div>
+  </div>

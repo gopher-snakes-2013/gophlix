@@ -1,0 +1,70 @@
+create CSV importer
+
+**** Base User Similarity
+select user POV
+for each other user
+  for each item both rated
+    track individual rating similarity points......... 10-abs(a-b)
+      add to user-user sum similarity points
+    track total possible similarity points.......10
+      add to user-user similarity potential
+return user similarity (sum similarity / possible similarity)
+
+
+################
+export to SQL
+
+Users Table <id, name
+^^^^^^^^^^^^^^^ 
+
+Games Table <id, name
+
+
+Ratings Table <id, rating
+^^^^^^^^^^^^^^^   rating 
+                  user_id 
+                  game_id 
+
+
+
+
+
+_________________________________________________________________________
+
+****Establish Correlations of all items to Item
+select Item in question
+for each item(Item2) in database
+  create arrays of equal length for Item and Item2.  Include ratings where they each have been rated by the same user
+  return array of arrays with Item 2 name and correlation of Item to Item2
+
+**** User Similarity in Terms of Item
+select user POV
+for each other user who rated Item
+  for each item both rated
+    track individual rating similarity points......... 10-abs(a-b)
+      multiply by correlation
+      add to user-user sum similarity points
+    track total possible similarity points.......10
+      multiply by correlation
+      add to user-user similarity potential
+return user similarity (sum similarity / possible similarity)
+  
+**** Predict Rating
+select user POV
+select Item in question
+for each user who has rated Item
+  sum rating += user product rating * POV-user sum similarity in Terms of Item
+  sum similarity potential += POV-user sum similarity in Terms of Item
+return predicted rating (sum rating / sum similarity potential)
+
+
+
+
+---Algorithm Improvements---
+
+weight UP/DOWN w/ Exponents: POV-user similairty ratings // Item-game correlations
+
+weight -item UP data pool size
+weight -user UP # items rated in common
+weight UP/DOWN -user item like/dislike binary differences
+cross tabulate category[music, games] correlations
