@@ -4,29 +4,48 @@ body {
 }
 
 #container {
-  width: 400px;
+  font-family: helvetica-light;
+  width: 960px;
   margin: 15px auto;
-  background-color: white;
+}
+
+#map {
+  position:relative;
+  padding-top:20px;
+  padding-bottom: 20px;
+}
+
+#footer {
+  font-family: courier;
+  font-size: 10px;
+  padding-top:10px;
+  padding-bottom:10px;
+  position:relative;
 }
 
 h1 {
-  text-align: center;
+  font-family:futura;
+  font-size: 50px;
   color: gray;
 }
 
-
-label
-{
-width: 6em;
-float: left;
-text-align: right;
-margin-right: 1em;
-display: block
+label {
+  width: 10em;
+  float: left;
+  text-align: right;
+  margin-right: 1em;
 }
 
-.submit input
-{
-margin-left: 4.5em;
+form {
+  width: 450px;
+  margin: 20px auto;
+
+}
+
+button {
+  font-family: geneva;
+  font-size: 12px;
+  padding:3px;
 }
 
 .node {

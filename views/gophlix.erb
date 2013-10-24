@@ -1,0 +1,46 @@
+<body>
+
+  <div id="name-picker">
+    <form action="/welcome" method="POST">
+      <select name='gsnake_id'>
+        <option selected>pick your name:</option>
+        <% Gsnake.all.each do |gsnake| %>
+        <option name=<%= gsnake.id %> value=<%= gsnake.id %>><%= gsnake.name %></option>
+        <% end %>
+      </select>
+      <button>yep</button>
+    </form>
+  </div>
+
+  <div id="map">
+  </div>
+
+  <div id="footer">
+    [ made with love by brantley, jenny, juke & nat ]
+  </div>
+
+</body>
+
+<script>
+$(document).ready(function(){
+  $("#map").hide();
+
+  $("form").on("submit", function(e){
+    e.preventDefault()
+
+    $.ajax({
+      type: "POST",
+      url: "/welcome",
+      data: $(this).serialize()
+    }).done(function(json_data){
+      $("#map").show();
+      persons_data = json_data;
+      update();
+    }).fail(function(){
+      console.log("womp");
+    })
+  })
+})
+</script>
+<script src="javascripts/d3.js"></script>
+<script src="javascripts/map.js"></script>
