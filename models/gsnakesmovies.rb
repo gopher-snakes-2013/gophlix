@@ -1,6 +1,6 @@
 class MovieRating < ActiveRecord::Base
   belongs_to :gsnake
   belongs_to :movie
-  validates :rating, presence: true
+  validates :rating, :gsnake_id, :movie_id, presence: true
 
 end

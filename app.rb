@@ -5,23 +5,8 @@ require_relative 'models/gsnake'
 require_relative 'models/movie'
 require_relative 'models/gsnakesmovies'
 
-enable :sessions
 
 set :database, "postgres://localhost/gophlix"
-
-get '/slider' do
-  erb :slider
-end
-
-helpers do
-  def signed_in_user
-    current_user
-  end
-
-  def current_user
-    @current_user ||= Gsnake.find_by_id(session[:gsnake_id]) if session[:gsnake_id]
-  end
-end
 
 ## D3 Map Shenanigans:
 
@@ -30,13 +15,13 @@ get '/' do
 end
 
 post '/welcome' do
-  session[:gsnake_id] = params[:gsnake_id]
+  selected_user = Gsnake.find_by_id(params[:gsnake_id])
+  data = selected_user.run_matches
 
-  data = current_user.run_matches
-
-  File.open("public/test.json","w") do |f|
-    f.write(data.to_json)
-  end
+# uncomment if want to create JSON file
+  # File.open("public/test.json","w") do |f|
+  #   f.write(data.to_json)
+  # end
 
   content_type :json
   return data.to_json
@@ -49,14 +34,11 @@ get '/survey' do
 end
 
 post '/rate_movie' do
-  session[:gsnake_id] = params[:gsnake_id]
 
-  this_movie_rating = MovieRating.find_by(gsnake_id: session[:gsnake_id])
-  Movie.all.each_with_index do |movie,index|
-    if this_movie_rating
-      MovieRating.update(this_movie_rating.id, gsnake_id: session[:gsnake_id], movie_id: params.keys[index].to_i, rating: params.values[index])
-    else
-      MovieRating.create(gsnake_id: session[:gsnake_id], movie_id: params.keys[index].to_i, rating: params.values[index])
+  params[:movies].each do |movie|
+    if movie[:rating] != ""
+      rating = MovieRating.find_or_create_by(movie_id: movie[:id], gsnake_id: params[:gsnake_id])
+      rating.update_attributes(rating: movie[:rating])
     end
   end
   redirect '/thanks'

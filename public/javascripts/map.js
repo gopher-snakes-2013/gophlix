@@ -75,7 +75,7 @@ var startMap = function() {
 
     // Shows node names on mouseover
     node.append("title")
-      .text(function(d) { return d.name; });
+      .text(function(d) { return d.name + "\n" + d.match*100 + "% match"; });
   }
 
 

@@ -17,7 +17,7 @@
 <div id="greeting">
   <p>Please rate the following movies you have seen.</p>
 </div>
-</br>
+<br/>
 <div id="survey">
   <p>
     <form action="/rate_movie" method="post">
@@ -27,11 +27,13 @@
       <select name='gsnake_id'>
         <option selected></option>
         <% Gsnake.all.each do |gsnake| %>
-        <option name=<%= gsnake.id %> value=<%= gsnake.id %>><%= gsnake.name %></option>
+        <option value=<%= gsnake.id %>>
+          <%= gsnake.name %>
+        </option>
         <% end %>
       </select>
     </div>
-  </br></br>
+  <br/><br/>
 
     <% Movie.all.each do |movie| %>
     <span id="<%=movie.title%>">
@@ -40,8 +42,8 @@
       <div class="slider" style="width:200px;display: inline-block;"></div>
 
       <div class="opinion" style="border: 0; font-weight: bold; display: inline-block; float:right;"></div>
-
-      <input type="text" name=<%= movie.id %> class="rating" style="border: 0; display: inline-block; font-weight: bold; font-size:12px; padding-left: 165px;"/>
+      <input type="hidden" name="movies[][id]" value="<%= movie.id %>" />
+      <input type="text" name="movies[][rating]" class="rating" style="border: 0; display: inline-block; font-weight: bold; font-size:12px; padding-left: 165px;"/>
     </span>
     <br/><br/>
 
@@ -91,7 +93,7 @@ $(".slider").slider({
       opinion_color = "#15DB00"
     };
     $(this).parent().children('.opinion').html(opinion).css("color",opinion_color);
-    rating = slider_value / 10.0;
+    rating = slider_value;
     $(this).parent().children(".rating").val(rating);
   },
 });
