@@ -1,10 +1,48 @@
-Pick your name:
-<form action="/welcome" method="post">
-<select name='gsnake_id' onchange='this.form.submit()'>
-  <option selected></option>
-    <% Gsnake.all.each do |gsnake| %>
-      <option name=<%= gsnake.id %> value=<%= gsnake.id %>><%= gsnake.name %></option>
-    <% end %>
-  </select>
-<noscript><input type="submit" name="submit_name" value="click to submit!"></noscript>
-</form>
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Gophlix</title>
+    <link rel="stylesheet" type="text/css" href="css/app.css">
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+  </head>
+
+  <body>
+    <div id="container">
+      <h1>Gophlix</h1>
+      <div id="name-picker">
+        Pick your name:
+        <form action="/welcome" method="POST">
+          <select name='gsnake_id'>
+            <option selected></option>
+            <% Gsnake.all.each do |gsnake| %>
+              <option name=<%= gsnake.id %> value=<%= gsnake.id %>><%= gsnake.name %></option>
+            <% end %>
+          </select>
+          <button>submit</button>
+        </form>
+      </div>
+    </div>
+  </body>
+
+  <script>
+   $(document).ready(function(){
+     $("form").on("submit", function(e){
+       e.preventDefault()
+
+       $.ajax({
+         type: "POST",
+         url: "/welcome",
+         data: $(this).serialize()
+       }).done(function(json_data){
+         persons_data = json_data
+         update()
+       }).fail(function(){
+         console.log("womp")
+       })
+     })
+   })
+  </script>
+  <script src="javascripts/d3.js"></script>
+  <script src="javascripts/map.js"></script>
+
+</html>
