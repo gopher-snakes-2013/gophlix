@@ -1,16 +1,14 @@
 var width = 960,
-    height = 500,
-    root;
+    height = 800
 
 var force = d3.layout.force()
     .linkDistance(50)
-    .charge(-200)
+    .charge(-400)
     .size([width, height])
-
     .on("tick", tick);
 
 var border = 5;
-var borderColor = "red";
+var borderColor = "black";
 
 var svg = d3.select("body").append("svg")
     .attr("width", width)
@@ -29,10 +27,7 @@ var borderPath = svg.append("rect")
 var link = svg.selectAll(".link"),
     node = svg.selectAll(".node");
 
-// root = persons_data;
-// update();
-
-//called on json reading and on node click
+// called on json reading and on node click
 function update() {
   var nodes = flatten(persons_data),
       links = d3.layout.tree().links(nodes);
@@ -68,8 +63,8 @@ function update() {
       .attr("class", "node")
       .attr("cx", function(d) { return d.x; })
       .attr("cy", function(d) { return d.y; })
-      .attr("r", function(d) { return ( d.match * d.match * 10) })
-      //circle radius =  "size" or "match" attr of each object
+      .attr("r", function(d) { return ( d.match * d.match * 15) })
+      // circle radius =  "size" or "match" attr of each object
       .style("fill", color)
       .on("click", click)
       .call(force.drag);
@@ -91,11 +86,11 @@ function tick() {
 }
 
 
-//sets colors.  higher match % greater saturation
 
 // Color leaf nodes orange, and packages white or blue.
 function color(d) {
 
+  // sets colors.  higher match => greater saturation
   scale_parents = d3.scale.linear()
          .domain([0, .7, 1])
          .range(["white", "yellow", "green"]);
