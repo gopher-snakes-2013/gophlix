@@ -16,7 +16,7 @@ class Gsnake < ActiveRecord::Base
     end
 
     return @self_hash
-    
+
   end
 
 
@@ -49,12 +49,12 @@ class Gsnake < ActiveRecord::Base
         self_rating = self.movie_ratings.where(movie_id: movie.id).take.rating
         peer_rating = peer.movie_ratings.where(movie_id: movie.id).take.rating
 
-        similarity_rating = 5 - (peer_rating - self_rating).abs
-        matched_movie[:match] = (similarity_rating / 5.to_f).round(2)
+        similarity_rating = 10 - (peer_rating - self_rating).abs
+        matched_movie[:match] = (similarity_rating / 10.to_f).round(2)
         output[:movie_array] << matched_movie
 
         cumulative_similarity_rating += similarity_rating
-        cumulative_max_of_ratings += 5
+        cumulative_max_of_ratings += 10
       end
     end
 

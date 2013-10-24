@@ -9,6 +9,10 @@ enable :sessions
 
 set :database, "postgres://localhost/gophlix"
 
+get '/slider' do
+  erb :slider
+end
+
 helpers do
   def signed_in_user
     current_user
@@ -29,6 +33,10 @@ post '/welcome' do
   session[:gsnake_id] = params[:gsnake_id]
 
   data = current_user.run_matches
+
+  File.open("public/test.json","w") do |f|
+    f.write(data.to_json)
+  end
 
   content_type :json
   return data.to_json
