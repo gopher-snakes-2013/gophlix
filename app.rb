@@ -1,5 +1,6 @@
 require "sinatra"
 require "sinatra/activerecord"
+require 'json'
 require_relative 'models/gsnake'
 require_relative 'models/movie'
 require_relative 'models/gsnakesmovies'
@@ -14,10 +15,30 @@ end
 
 post '/welcome' do
   session[:gsnake_id] = params[:gsnake_id]
-  redirect '/survey'
+
+  redirect '/my_movie_map'
 end
 
+get '/my_movie_map' do
+ 
+  p "-----------------------------------------"
+  @x = current_user.run_matches
+  @y = @x.to_json
+  File.open("public/temp.json","w") do |f|
+    f.write(@y)
+  end
+
+  # return @y
+
+  erb :my_movie_map
+end
+
+
+
 get '/survey' do
+
+
+
   erb :survey
 end
 
@@ -27,10 +48,11 @@ post '/rate_movie' do
       MovieRating.create!(gsnake_id: session[:gsnake_id], movie_id: params.keys[index].to_i, rating: params.values[index].to_i)
     end
   end
-  p "-----------------------------------------"
-  p current_user#.run_matches
-  # p @matches = current_user.run_matches
-  # erb :thanks
+  redirect '/thanks'
+end
+
+get '/thanks' do
+  erb :thanks
 end
 
 helpers do
@@ -42,8 +64,3 @@ helpers do
     @current_user ||= Gsnake.find_by_id(session[:gsnake_id]) if session[:gsnake_id]
   end
 end
-
-
-
-
-

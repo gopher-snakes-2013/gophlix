@@ -1,11 +1,13 @@
 {
  "name": "John Uke",
  "size": 1,
- "children": [
+ "children": 
+ [
   {
    "name": "Jon Howell",
     "size": 0.8,
-    "children": [
+    "children": 
+    [
       {"name": "Starcraft 2", "size": 0.8},
       {"name": "League of Legends", "size": 0.8},
       {"name": "Guild Wars 2", "size": 1},
@@ -15,7 +17,8 @@
   {
    "name": "Cole",
     "size": 0.83,
-    "children": [
+    "children": 
+    [
       {"name": "Skyrim", "size": 0.8},
       {"name": "Starcraft 2", "size": 0.8},
       {"name": "League of Legends", "size": 0.7},
@@ -25,14 +28,10 @@
   {
    "name": "ben",
     "size": 0.6,
-    "children": [
+    "children": 
+    [
       {"name": "Halo 2", "size": 0.6}
-      {"name": "Starcraft 2", "size": 0.8},
-      {"name": "League of Legends", "size": 0.8},
-      {"name": "Guild Wars 2", "size": 1},
-      {"name": "World of Warcraft", "size": 0.6}
     ]
   }
  ]
 }
-
