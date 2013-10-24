@@ -16,29 +16,17 @@ end
 post '/welcome' do
   session[:gsnake_id] = params[:gsnake_id]
 
-  redirect '/my_movie_map'
+  @x = current_user.run_matches
+  content_type :json
+  
+  return @x.to_json
 end
 
-get '/my_movie_map' do
- 
-  p "-----------------------------------------"
-  @x = current_user.run_matches
-  @y = @x.to_json
-  File.open("public/temp.json","w") do |f|
-    f.write(@y)
-  end
-
-  # return @y
-
+get '/my_movie_map' do 
   erb :my_movie_map
 end
 
-
-
 get '/survey' do
-
-
-
   erb :survey
 end
 
