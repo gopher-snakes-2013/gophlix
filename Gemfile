@@ -12,5 +12,4 @@ group :development, :test do
   gem 'tux'
   gem 'rspec'
   gem 'rack'
-  gem 'dotenv'
 end

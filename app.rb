@@ -6,13 +6,7 @@ require './models/gsnake'
 require './models/movie'
 require './models/gsnakesmovies'
 
-begin
-  require 'dotenv'
-  Dotenv.load
-rescue LoadError
-end
-
-set :database, ENV['DATABASE_URL']
+set :database, ENV['DATABASE_URL'] ||= 'postgres://localhost/gophlix'
 
 ## D3 Map Shenanigans:
 
