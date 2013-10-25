@@ -8,7 +8,6 @@ describe Gsnake do
   it "should return what I expect it to" do
     person = Gsnake.first
     person.select_relevant.count.should > 0
-    # person.run_matches[:children].should != []
   end
 
   it "should return a hash output" do
