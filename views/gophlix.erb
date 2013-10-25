@@ -5,7 +5,7 @@
       <select name='gsnake_id'>
         <option selected>pick your name:</option>
         <% Gsnake.all.each do |gsnake| %>
-        <option name=<%= gsnake.id %> value=<%= gsnake.id %>><%= gsnake.name %></option>
+        <option value=<%= gsnake.id %>><%= gsnake.name %></option>
         <% end %>
       </select>
       <button>yep</button>
@@ -22,25 +22,25 @@
 </body>
 
 <script>
-$(document).ready(function(){
-  $("#map").hide();
+  $(document).ready(function(){
+    $("#map").hide();
 
-  $("form").on("submit", function(e){
-    e.preventDefault()
+    $("form").on("submit", function(e){
+      e.preventDefault()
 
-    $.ajax({
-      type: "POST",
-      url: "/welcome",
-      data: $(this).serialize()
-    }).done(function(json_data){
-      $("#map").show();
-      persons_data = json_data;
-      startMap();
-    }).fail(function(){
-      console.log("womp");
+      $.ajax({
+        type: "POST",
+        url: "/welcome",
+        data: $(this).serialize()
+      }).done(function(data){
+        $("#map").show();
+        persons_data = data;
+        startMap();
+      }).fail(function(){
+        console.log("womp");
+      })
     })
   })
-})
 </script>
 <script src="javascripts/d3.js"></script>
 <script src="javascripts/map.js"></script>
