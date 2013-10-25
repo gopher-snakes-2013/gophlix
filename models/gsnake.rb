@@ -4,25 +4,35 @@ class Gsnake < ActiveRecord::Base
 
 
   def run_matches
-    @self_hash = {:name => self.name, :match => 1, :children => []}
-    @other_gsnakes = select_relevant
+    self_hash = {:name => self.name, :match => 1, :children => []}
 
-    @other_gsnakes.each do |peer|
-      peer_data = get_percent_similar(peer)
-      x = {:name => peer_data[:name], :match => peer_data[:peer_match], :children => peer_data[:movie_array]}
-      if x[:match] > 0
-        @self_hash[:children] << x
-      end
+    other_gsnakes = select_relevant
+
+    other_gsnakes.each do |peer|
+      match = get_match_for(peer)
+      self_hash[:children] << match if is_worth_keeping?(match[:match])
     end
 
-    return @self_hash
+    self_hash
 
   end
 
+  def get_match_for(peer)
+    peer_data = get_percent_similar(peer)
+    {
+      :name     => peer.name,
+      :match    => peer_data[:peer_match],
+      :children => peer_data[:movie_array]
+    }
+  end
+
+  def is_worth_keeping?(match)
+    match > 0
+  end
 
   def select_relevant
-    @relevant = all_gsnakes_except_self
-    with_votes_in_common(@relevant)
+    relevant = all_gsnakes_except_self
+    with_votes_in_common(relevant)
   end
 
   def all_gsnakes_except_self
@@ -33,6 +43,10 @@ class Gsnake < ActiveRecord::Base
     gsnakes.each
   end
 
+
+#split this into two methods
+# => def get_similarity
+# => def get_movies
 
   def get_percent_similar(peer)
     output = {}
@@ -46,20 +60,22 @@ class Gsnake < ActiveRecord::Base
       if peer.movies.exists?(movie)
         matched_movie = {}
         matched_movie[:name] = movie.title
+
         self_rating = self.movie_ratings.where(movie_id: movie.id).take.rating
         peer_rating = peer.movie_ratings.where(movie_id: movie.id).take.rating
 
-        similarity_rating = 10 - (peer_rating - self_rating).abs
-        matched_movie[:match] = (similarity_rating / 10.to_f).round(2)
+        similarity_rating = 100 - (peer_rating - self_rating).abs
+        matched_movie[:match] = (similarity_rating / 100.0).round(2)
         output[:movie_array] << matched_movie
 
         cumulative_similarity_rating += similarity_rating
-        cumulative_max_of_ratings += 10
+        cumulative_max_of_ratings += 100
       end
     end
 
     percent_similar = cumulative_similarity_rating.to_f / cumulative_max_of_ratings.to_f
     output[:peer_match] = percent_similar.round(2)
+
     return output
   end
 

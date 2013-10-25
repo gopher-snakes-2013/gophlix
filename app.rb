@@ -1,12 +1,4 @@
-require "sinatra"
-require "sinatra/activerecord"
-require 'json'
-
-require './models/gsnake'
-require './models/movie'
-require './models/gsnakesmovies'
-
-set :database, ENV['DATABASE_URL'] ||= 'postgres://localhost/gophlix'
+require './config'
 
 ## D3 Map Shenanigans:
 
@@ -19,9 +11,9 @@ post '/welcome' do
   data = selected_user.run_matches
 
 # uncomment if want to create JSON file
-  # File.open("public/test.json","w") do |f|
-  #   f.write(data.to_json)
-  # end
+  File.open("public/test.json","w") do |f|
+    f.write(data.to_json)
+  end
 
   content_type :json
   return data.to_json
