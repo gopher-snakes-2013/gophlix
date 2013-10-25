@@ -1,35 +1,35 @@
 require "sinatra"
 require "sinatra/activerecord"
 require 'json'
-require_relative 'models/gsnake'
-require_relative 'models/movie'
-require_relative 'models/gsnakesmovies'
 
+require './models/gsnake'
+require './models/movie'
+require './models/gsnakesmovies'
 
-set :database, "postgres://localhost/gophlix"
+set :database, ENV['DATABASE_URL'] ||= 'postgres://localhost/gophlix'
 
 ## D3 Map Shenanigans:
 
-get '/' do
-  erb :gophlix
-end
+# get '/' do
+#   erb :gophlix
+# end
 
-post '/welcome' do
-  selected_user = Gsnake.find_by_id(params[:gsnake_id])
-  data = selected_user.run_matches
+# post '/welcome' do
+#   selected_user = Gsnake.find_by_id(params[:gsnake_id])
+#   data = selected_user.run_matches
 
-# uncomment if want to create JSON file
-  # File.open("public/test.json","w") do |f|
-  #   f.write(data.to_json)
-  # end
+# # uncomment if want to create JSON file
+#   # File.open("public/test.json","w") do |f|
+#   #   f.write(data.to_json)
+#   # end
 
-  content_type :json
-  return data.to_json
-end
+#   content_type :json
+#   return data.to_json
+# end
 
 ## Survey Shnaz:
 
-get '/survey' do
+get '/' do
   erb :survey
 end
 
